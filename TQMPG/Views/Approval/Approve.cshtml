@@ -1,0 +1,159 @@
+﻿
+
+
+@model TQMPG.Models.TQM_Details
+
+@{
+    ViewBag.Title = "Approve";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    System.Security.Principal.WindowsIdentity identity = HttpContext.Current.Request.LogonUserIdentity;
+    var ntid = identity.Name.Split('\\')[1];
+
+}
+
+<h2 style="margin-top:100px;">Approval</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AutoID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AutoID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SerialNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SerialNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dept)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dept)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Idea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Idea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KPI_Dept)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KPI_Dept)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KPI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KPI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SynergyModel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SynergyModel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <a href="#" id="Approve" name="Approve">Approve</a> |
+    @Html.ActionLink("Back to List", "Index");
+</p>
+
+<form id="form" action="/approval/ApprovalDetail" method="post" hidden>
+
+
+    <input id="tqmID" name="tqmID" value=@Html.DisplayFor(model => model.SerialNo) />
+    <input id="approvalComment" name="approvalComment" value="" />
+    <input id="empNo" name="empNo" value="" />
+
+
+</form>
+
+<script>
+
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "http://adpgintranet2.web.analog.com/webApi/api/getuser/q?ntid=@ntid",
+            type: "GET",
+            crossDomain: true,
+            success: function (data) {
+                console.log(data);
+                var empno = data["Properties"]["extensionattribute1"]['0'];
+                $("#empNo").val(empno);
+
+
+
+            }
+        });
+
+
+    });
+    $('#Approve').click(function () {
+
+        var approve = prompt("Please enter justification");
+        if (approve == null || approve == "") {
+            alert("nothing");
+        } else {
+            $('#approvalComment').val(approve);
+            $('#form').submit();
+        }
+    });
+
+</script>

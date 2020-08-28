@@ -1,0 +1,76 @@
+﻿@model IEnumerable<TQMPG.Models.Project_Charter>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Business_Case)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Opportunity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Saving)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Goal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Scope)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Plan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MethodologyID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentStep)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Business_Case)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Opportunity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Saving)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Goal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Scope)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MethodologyID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentStep)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TQMID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TQMID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TQMID })
+        </td>
+    </tr>
+}
+
+</table>

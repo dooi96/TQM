@@ -1,0 +1,35 @@
+﻿@model TQMPG.Models.KPI
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>KPI</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.KPI_DeptID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KPI_DeptID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KPI1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KPI1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AutoID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

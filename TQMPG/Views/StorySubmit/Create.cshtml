@@ -1,0 +1,320 @@
+﻿@model TQMPG.Models.TQM_Details
+
+
+<div style="padding-top:80px;">
+    @{
+        ViewBag.Title = "Create an Idea/Project";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    @{
+        var data = ViewBag.Message;
+    }
+
+    @{
+        System.Security.Principal.WindowsIdentity identity = HttpContext.Current.Request.LogonUserIdentity;
+        var ntid = identity.Name.Split('\\')[1];
+
+    }
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
+
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+        }
+
+        .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+    <h2>@ViewBag.Title</h2>
+
+    @*@data[0].empFullName*@
+
+
+    <div class="container">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "register" }))
+        {
+            @Html.AntiForgeryToken()
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.SerialNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.SerialNo, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.SerialNo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.EmpNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.EmpNo, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.EmpNo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.EmpName, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.EmpName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.EmpName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+              
+                    @Html.LabelFor(model => model.Dept, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Dept, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Dept, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label class = "control-label col-md-2" >Project Title</label>
+                    @*@Html.LabelFor(model => model.Idea, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Idea, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Idea, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.KPI_Dept, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.DropDownList("KPI_Dept", null, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.KPI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.KPI, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.DropDownList("KPI", null, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.KPI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.SynergyModel, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+
+                    <input type="file" name="file" id="file">
+                    <input type="button" value="Get Template" name="getTemplate" class="btn btn-info">
+
+
+                    @*@Html.EditorFor(model => model.SynergyModel, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.SynergyModel, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" class="btn btn-default" id="btnSubmit" name="btnSubmit" />
+            </div>
+        }
+    </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#KPI").empty();
+        getSerialNo()
+
+        $("#KPI_Dept").change(function () {
+            var value = $("#KPI_Dept").val();
+
+            getKPI(value);
+
+        });
+
+        
+        function getKPI(value) {
+
+            $.ajax({
+                url: "GetKPI",
+                data: { value: value },
+                type: "GET",
+                success: function (data) {
+                    data = JSON.parse(data);
+                    $("#KPI").empty();
+                    KPI = "";
+
+                    $.each(data, function (key, val) {                  
+                                  KPI += "<option value='" +val+ "'>" +val+ "</option>";               
+                        });
+                    $("#KPI").append(KPI);
+                }
+            })           
+        }
+
+
+
+        $.ajax({
+            url: "http://adpgintranet2.web.analog.com/webApi/api/getuser/q?ntid=@ntid",
+            type: "GET",
+            crossDomain: true,
+            success: function (data) {
+                console.log(data);
+                var empno = data["Properties"]["extensionattribute1"]['0'];
+                $("#EmpNo").val(empno);
+                $("#EmpName").val(data["Properties"]["cn"]['0']);
+
+                getDepartment(empno);
+
+            }
+        });
+
+       
+        function getDepartment(empno) {
+            $.ajax({
+                url: "GetDepartment",
+                data: { empno: empno },
+                type: "GET",
+                success: function (data) {
+                    $("#Dept").val(data);
+                }
+
+            })
+        }
+
+        function getSerialNo() {
+                $.ajax({
+                    url: "getSerialNo",
+                    type: "GET",
+                    success: function (data) {
+                        data = JSON.parse(data);
+
+                        row = data[data.length - 1];
+
+                        if (row != null) {
+          
+                            serial = row + 1;
+                            $('#SerialNo').val(serial);
+
+                        }
+                        else {
+
+                            var year = new Date();
+                            yearYY = year.getYear();
+                            serial = yearYY + "0001";
+                            serialNo = serial.substr(1);
+                           
+                    $('#SerialNo').val(serialNo);
+                        
+                        }
+
+                    }
+
+                })
+        }
+    });
+
+    function pad(str, max) {
+        str = str.toString();
+        return str.length < max ? pad("0" + str, max) : str;
+    }
+    $("#file").change(function () {
+        var fileExtension = ['pdf', 'zip'];
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            alert("Only formats are allowed : " + fileExtension.join(', '));
+            $("#file").val("");
+        }
+    });
+    $("#register").submit(function (submitEvent) {
+        // get the file name, possibly with path (depends on browser)
+        var filename = $("#file").val();
+        // Use a regular expression to trim everything before final dot
+        var extension = filename.replace(/^.*\./, '');
+        // Iff there is no dot anywhere in filename, we would have extension == filename,
+        // so we account for this possibility now
+        if (extension == filename) {
+            extension = '';
+        } else {
+            // if there is an extension, we convert to lower case
+            // (N.B. this conversion will not effect the value of the extension
+            // on the file upload.)
+            extension = extension.toLowerCase();
+        }
+        switch (extension) {
+            case 'pdf':
+                // uncomment the next line to allow the form to submitted in this case:
+                break;
+            case 'zip':
+                // uncomment the next line to allow the form to submitted in this case:
+                break;
+            default:
+                alert("Only PDF or ZIP file are allowed.")
+                // Cancel the form submission
+                submitEvent.preventDefault();
+        }
+    });
+
+
+
+
+</script>
+

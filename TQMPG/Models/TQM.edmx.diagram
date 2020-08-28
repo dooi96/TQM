@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e3cc1acccdff4bc787ae4f8a02555d41" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="TQMModel.Dept_Info" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TQMModel.KPI" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TQMModel.KPI_Dept" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TQMModel.Project_Charter" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TQMModel.TQM_Approval" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TQMModel.TQM_Details" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TQMModel.TQM_Member" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="TQMModel.TQM_Methodology" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="TQMModel.TQM_MethodologyStep" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="TQMModel.TQM_Officials" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="TQMModel.TQM_Role" Width="1.5" PointX="0.75" PointY="1.25" />
+        <AssociationConnector Association="TQMModel.FK_TQM_Member_TQM_Role" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

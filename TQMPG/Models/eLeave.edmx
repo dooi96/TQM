@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProdDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProdDB.dbo.v_eLeave_EmployeeDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_eLeave_EmployeeDetails">
+          <Key>
+            <PropertyRef Name="empEmployeeNo" />
+          </Key>
+          <Property Name="empEmployeeNo" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="empFullName" Type="varchar" MaxLength="80" />
+          <Property Name="preDeptDesc" Type="varchar" MaxLength="50" />
+          <Property Name="empEmail" Type="varchar" MaxLength="100" />
+          <Property Name="PreSectionDesc" Type="varchar" MaxLength="50" />
+          <Property Name="preJobFunctionDesc" Type="varchar" MaxLength="50" />
+          <Property Name="empCalCode" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="empSupervisor" Type="bit" />
+          <Property Name="empDirectSupNo" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="supName" Type="varchar" MaxLength="81" />
+          <Property Name="supEmail" Type="varchar" MaxLength="100" />
+          <Property Name="indName" Type="varchar" MaxLength="81" />
+          <Property Name="indEmail" Type="varchar" MaxLength="100" />
+          <Property Name="preJobCat" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="prePostDesc" Type="varchar" MaxLength="50" />
+          <Property Name="empBadgeNo" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityContainer Name="ProdDBModelStoreContainer">
+          <EntitySet Name="v_eLeave_EmployeeDetails" EntityType="Self.v_eLeave_EmployeeDetails" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_eLeave_EmployeeDetails].[empEmployeeNo] AS [empEmployeeNo], 
+    [v_eLeave_EmployeeDetails].[empFullName] AS [empFullName], 
+    [v_eLeave_EmployeeDetails].[preDeptDesc] AS [preDeptDesc], 
+    [v_eLeave_EmployeeDetails].[empEmail] AS [empEmail], 
+    [v_eLeave_EmployeeDetails].[PreSectionDesc] AS [PreSectionDesc], 
+    [v_eLeave_EmployeeDetails].[preJobFunctionDesc] AS [preJobFunctionDesc], 
+    [v_eLeave_EmployeeDetails].[empCalCode] AS [empCalCode], 
+    [v_eLeave_EmployeeDetails].[empSupervisor] AS [empSupervisor], 
+    [v_eLeave_EmployeeDetails].[empDirectSupNo] AS [empDirectSupNo], 
+    [v_eLeave_EmployeeDetails].[supName] AS [supName], 
+    [v_eLeave_EmployeeDetails].[supEmail] AS [supEmail], 
+    [v_eLeave_EmployeeDetails].[indName] AS [indName], 
+    [v_eLeave_EmployeeDetails].[indEmail] AS [indEmail], 
+    [v_eLeave_EmployeeDetails].[preJobCat] AS [preJobCat], 
+    [v_eLeave_EmployeeDetails].[prePostDesc] AS [prePostDesc], 
+    [v_eLeave_EmployeeDetails].[empBadgeNo] AS [empBadgeNo]
+    FROM [dbo].[v_eLeave_EmployeeDetails] AS [v_eLeave_EmployeeDetails]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProdDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="v_eLeave_EmployeeDetails">
+          <Key>
+            <PropertyRef Name="empEmployeeNo" />
+          </Key>
+          <Property Name="empEmployeeNo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="empFullName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="preDeptDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="empEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PreSectionDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="preJobFunctionDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="empCalCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="empSupervisor" Type="Boolean" />
+          <Property Name="empDirectSupNo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="supName" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="supEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="indName" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="indEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="preJobCat" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="prePostDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="empBadgeNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="eLeaveEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="v_eLeave_EmployeeDetails" EntityType="Self.v_eLeave_EmployeeDetails" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProdDBModelStoreContainer" CdmEntityContainer="eLeaveEntities">
+          <EntitySetMapping Name="v_eLeave_EmployeeDetails">
+            <EntityTypeMapping TypeName="ProdDBModel.v_eLeave_EmployeeDetails">
+              <MappingFragment StoreEntitySet="v_eLeave_EmployeeDetails">
+                <ScalarProperty Name="empEmployeeNo" ColumnName="empEmployeeNo" />
+                <ScalarProperty Name="empFullName" ColumnName="empFullName" />
+                <ScalarProperty Name="preDeptDesc" ColumnName="preDeptDesc" />
+                <ScalarProperty Name="empEmail" ColumnName="empEmail" />
+                <ScalarProperty Name="PreSectionDesc" ColumnName="PreSectionDesc" />
+                <ScalarProperty Name="preJobFunctionDesc" ColumnName="preJobFunctionDesc" />
+                <ScalarProperty Name="empCalCode" ColumnName="empCalCode" />
+                <ScalarProperty Name="empSupervisor" ColumnName="empSupervisor" />
+                <ScalarProperty Name="empDirectSupNo" ColumnName="empDirectSupNo" />
+                <ScalarProperty Name="supName" ColumnName="supName" />
+                <ScalarProperty Name="supEmail" ColumnName="supEmail" />
+                <ScalarProperty Name="indName" ColumnName="indName" />
+                <ScalarProperty Name="indEmail" ColumnName="indEmail" />
+                <ScalarProperty Name="preJobCat" ColumnName="preJobCat" />
+                <ScalarProperty Name="prePostDesc" ColumnName="prePostDesc" />
+                <ScalarProperty Name="empBadgeNo" ColumnName="empBadgeNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

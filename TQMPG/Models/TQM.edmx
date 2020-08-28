@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TQMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dept_Info">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Department" Type="nvarchar" MaxLength="30" />
+          <Property Name="Dept_Mgr" Type="nvarchar" MaxLength="20" />
+          <Property Name="Dept_Mgr_Email" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="KPI">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KPI_DeptID" Type="int" />
+          <Property Name="KPI" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="KPI_Dept">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dept_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Dept_Mgr" Type="nvarchar" MaxLength="25" />
+          <Property Name="Dept_Mgr_Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Dept_Mgr_EmpID" Type="int" />
+        </EntityType>
+        <EntityType Name="Project_Charter">
+          <Key>
+            <PropertyRef Name="TQMID" />
+          </Key>
+          <Property Name="TQMID" Type="int" Nullable="false" />
+          <Property Name="Business_Case" Type="varchar" MaxLength="50" />
+          <Property Name="Opportunity" Type="varchar" MaxLength="50" />
+          <Property Name="Risk_Assessment" Type="varchar" MaxLength="50" />
+          <Property Name="Goal" Type="int" />
+          <Property Name="Scope" Type="int" />
+          <Property Name="Project_Plan" Type="int" />
+          <Property Name="MethodologyID" Type="int" />
+          <Property Name="CurrentStep" Type="int" />
+        </EntityType>
+        <EntityType Name="TQM_Approval">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TQMID" Type="int" />
+          <Property Name="EmpNo" Type="int" />
+          <Property Name="ApprovalComment" Type="nvarchar" MaxLength="150" />
+          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="ApprovalDatetime" Type="datetime" />
+          <Property Name="ApprovalStep" Type="int" />
+        </EntityType>
+        <EntityType Name="TQM_Details">
+          <Key>
+            <PropertyRef Name="SerialNo" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SerialNo" Type="int" Nullable="false" />
+          <Property Name="EmpNo" Type="int" />
+          <Property Name="EmpName" Type="varchar" MaxLength="50" />
+          <Property Name="Dept" Type="varchar" MaxLength="50" />
+          <Property Name="Idea" Type="varchar" MaxLength="100" />
+          <Property Name="KPI_Dept" Type="int" />
+          <Property Name="KPI" Type="varchar" MaxLength="50" />
+          <Property Name="SynergyModel" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="TransactDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TQM_Member">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TQMID" Type="int" Nullable="false" />
+          <Property Name="EmpNo" Type="int" />
+          <Property Name="EmpName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TQM_Methodology">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MethodologyName" Type="nvarchar" MaxLength="20" />
+          <Property Name="MethodologyDescription" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="TQM_MethodologyStep">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MethodologyID" Type="int" Nullable="false" />
+          <Property Name="StepName" Type="nvarchar" MaxLength="20" />
+          <Property Name="StepDescription" Type="nvarchar" MaxLength="200" />
+          <Property Name="StepNumber" Type="int" />
+          <Property Name="RequireApproval" Type="bit" />
+          <Property Name="ApprovalRoleID" Type="int" />
+        </EntityType>
+        <EntityType Name="TQM_Officials">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpNo" Type="int" />
+          <Property Name="EmpName" Type="nvarchar" MaxLength="20" />
+          <Property Name="EmpEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleID" Type="int" />
+        </EntityType>
+        <EntityType Name="TQM_Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="20" />
+          <Property Name="RoleDescription" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <Association Name="FK_TQM_Member_TQM_Role">
+          <End Role="TQM_Role" Type="Self.TQM_Role" Multiplicity="1" />
+          <End Role="TQM_Member" Type="Self.TQM_Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TQM_Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="TQM_Member">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TQMModelStoreContainer">
+          <EntitySet Name="Dept_Info" EntityType="Self.Dept_Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KPI" EntityType="Self.KPI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KPI_Dept" EntityType="Self.KPI_Dept" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project_Charter" EntityType="Self.Project_Charter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_Approval" EntityType="Self.TQM_Approval" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_Details" EntityType="Self.TQM_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_Member" EntityType="Self.TQM_Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_Methodology" EntityType="Self.TQM_Methodology" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_MethodologyStep" EntityType="Self.TQM_MethodologyStep" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_Officials" EntityType="Self.TQM_Officials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_Role" EntityType="Self.TQM_Role" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TQM_Member_TQM_Role" Association="Self.FK_TQM_Member_TQM_Role">
+            <End Role="TQM_Role" EntitySet="TQM_Role" />
+            <End Role="TQM_Member" EntitySet="TQM_Member" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TQMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TQMEntitiesModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dept_Info" EntityType="TQMModel.Dept_Info" />
+          <EntitySet Name="KPIs" EntityType="TQMModel.KPI" />
+          <EntitySet Name="KPI_Dept" EntityType="TQMModel.KPI_Dept" />
+          <EntitySet Name="Project_Charter" EntityType="TQMModel.Project_Charter" />
+          <EntitySet Name="TQM_Approval" EntityType="TQMModel.TQM_Approval" />
+          <EntitySet Name="TQM_Details" EntityType="TQMModel.TQM_Details" />
+          <EntitySet Name="TQM_Member" EntityType="TQMModel.TQM_Member" />
+          <EntitySet Name="TQM_Methodology" EntityType="TQMModel.TQM_Methodology" />
+          <EntitySet Name="TQM_MethodologyStep" EntityType="TQMModel.TQM_MethodologyStep" />
+          <EntitySet Name="TQM_Officials" EntityType="TQMModel.TQM_Officials" />
+          <EntitySet Name="TQM_Role" EntityType="TQMModel.TQM_Role" />
+          <AssociationSet Name="FK_TQM_Member_TQM_Role" Association="TQMModel.FK_TQM_Member_TQM_Role">
+            <End Role="TQM_Role" EntitySet="TQM_Role" />
+            <End Role="TQM_Member" EntitySet="TQM_Member" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Dept_Info">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Department" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Dept_Mgr" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Dept_Mgr_Email" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="KPI">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KPI_DeptID" Type="Int32" />
+          <Property Name="KPI1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="KPI_Dept">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dept_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Dept_Mgr" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Dept_Mgr_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dept_Mgr_EmpID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Project_Charter">
+          <Key>
+            <PropertyRef Name="TQMID" />
+          </Key>
+          <Property Name="TQMID" Type="Int32" Nullable="false" />
+          <Property Name="Business_Case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Opportunity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Risk_Assessment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Goal" Type="Int32" />
+          <Property Name="Scope" Type="Int32" />
+          <Property Name="Project_Plan" Type="Int32" />
+          <Property Name="MethodologyID" Type="Int32" />
+          <Property Name="CurrentStep" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TQM_Approval">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TQMID" Type="Int32" />
+          <Property Name="EmpNo" Type="Int32" />
+          <Property Name="ApprovalComment" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovalDatetime" Type="DateTime" Precision="3" />
+          <Property Name="ApprovalStep" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TQM_Details">
+          <Key>
+            <PropertyRef Name="SerialNo" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SerialNo" Type="Int32" Nullable="false" />
+          <Property Name="EmpNo" Type="Int32" />
+          <Property Name="EmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Dept" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Idea" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="KPI_Dept" Type="Int32" />
+          <Property Name="KPI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SynergyModel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TQM_Member">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TQMID" Type="Int32" Nullable="false" />
+          <Property Name="EmpNo" Type="Int32" />
+          <Property Name="EmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TQM_Role" Relationship="TQMModel.FK_TQM_Member_TQM_Role" FromRole="TQM_Member" ToRole="TQM_Role" />
+        </EntityType>
+        <EntityType Name="TQM_Methodology">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MethodologyName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MethodologyDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TQM_MethodologyStep">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MethodologyID" Type="Int32" Nullable="false" />
+          <Property Name="StepName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StepDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StepNumber" Type="Int32" />
+          <Property Name="RequireApproval" Type="Boolean" />
+          <Property Name="ApprovalRoleID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TQM_Officials">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpNo" Type="Int32" />
+          <Property Name="EmpName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EmpEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TQM_Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RoleDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TQM_Member" Relationship="TQMModel.FK_TQM_Member_TQM_Role" FromRole="TQM_Role" ToRole="TQM_Member" />
+        </EntityType>
+        <Association Name="FK_TQM_Member_TQM_Role">
+          <End Type="TQMModel.TQM_Role" Role="TQM_Role" Multiplicity="1" />
+          <End Type="TQMModel.TQM_Member" Role="TQM_Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TQM_Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="TQM_Member">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TQMModelStoreContainer" CdmEntityContainer="TQMEntitiesModel">
+          <EntitySetMapping Name="Dept_Info">
+            <EntityTypeMapping TypeName="TQMModel.Dept_Info">
+              <MappingFragment StoreEntitySet="Dept_Info">
+                <ScalarProperty Name="Dept_Mgr_Email" ColumnName="Dept_Mgr_Email" />
+                <ScalarProperty Name="Dept_Mgr" ColumnName="Dept_Mgr" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPIs">
+            <EntityTypeMapping TypeName="TQMModel.KPI">
+              <MappingFragment StoreEntitySet="KPI">
+                <ScalarProperty Name="KPI1" ColumnName="KPI" />
+                <ScalarProperty Name="KPI_DeptID" ColumnName="KPI_DeptID" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPI_Dept">
+            <EntityTypeMapping TypeName="TQMModel.KPI_Dept">
+              <MappingFragment StoreEntitySet="KPI_Dept">
+                <ScalarProperty Name="Dept_Mgr_EmpID" ColumnName="Dept_Mgr_EmpID" />
+                <ScalarProperty Name="Dept_Mgr_Email" ColumnName="Dept_Mgr_Email" />
+                <ScalarProperty Name="Dept_Mgr" ColumnName="Dept_Mgr" />
+                <ScalarProperty Name="Dept_Name" ColumnName="Dept_Name" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Project_Charter">
+            <EntityTypeMapping TypeName="TQMModel.Project_Charter">
+              <MappingFragment StoreEntitySet="Project_Charter">
+                <ScalarProperty Name="CurrentStep" ColumnName="CurrentStep" />
+                <ScalarProperty Name="MethodologyID" ColumnName="MethodologyID" />
+                <ScalarProperty Name="Project_Plan" ColumnName="Project_Plan" />
+                <ScalarProperty Name="Scope" ColumnName="Scope" />
+                <ScalarProperty Name="Goal" ColumnName="Goal" />
+                <ScalarProperty Name="Risk_Assessment" ColumnName="Risk_Assessment" />
+                <ScalarProperty Name="Opportunity" ColumnName="Opportunity" />
+                <ScalarProperty Name="Business_Case" ColumnName="Business_Case" />
+                <ScalarProperty Name="TQMID" ColumnName="TQMID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_Approval">
+            <EntityTypeMapping TypeName="TQMModel.TQM_Approval">
+              <MappingFragment StoreEntitySet="TQM_Approval">
+                <ScalarProperty Name="ApprovalStep" ColumnName="ApprovalStep" />
+                <ScalarProperty Name="ApprovalDatetime" ColumnName="ApprovalDatetime" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="ApprovalComment" ColumnName="ApprovalComment" />
+                <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
+                <ScalarProperty Name="TQMID" ColumnName="TQMID" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_Details">
+            <EntityTypeMapping TypeName="TQMModel.TQM_Details">
+              <MappingFragment StoreEntitySet="TQM_Details">
+                <ScalarProperty Name="TransactDate" ColumnName="TransactDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SynergyModel" ColumnName="SynergyModel" />
+                <ScalarProperty Name="KPI" ColumnName="KPI" />
+                <ScalarProperty Name="KPI_Dept" ColumnName="KPI_Dept" />
+                <ScalarProperty Name="Idea" ColumnName="Idea" />
+                <ScalarProperty Name="Dept" ColumnName="Dept" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_Member">
+            <EntityTypeMapping TypeName="TQMModel.TQM_Member">
+              <MappingFragment StoreEntitySet="TQM_Member">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
+                <ScalarProperty Name="TQMID" ColumnName="TQMID" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_Methodology">
+            <EntityTypeMapping TypeName="TQMModel.TQM_Methodology">
+              <MappingFragment StoreEntitySet="TQM_Methodology">
+                <ScalarProperty Name="MethodologyDescription" ColumnName="MethodologyDescription" />
+                <ScalarProperty Name="MethodologyName" ColumnName="MethodologyName" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_MethodologyStep">
+            <EntityTypeMapping TypeName="TQMModel.TQM_MethodologyStep">
+              <MappingFragment StoreEntitySet="TQM_MethodologyStep">
+                <ScalarProperty Name="ApprovalRoleID" ColumnName="ApprovalRoleID" />
+                <ScalarProperty Name="RequireApproval" ColumnName="RequireApproval" />
+                <ScalarProperty Name="StepNumber" ColumnName="StepNumber" />
+                <ScalarProperty Name="StepDescription" ColumnName="StepDescription" />
+                <ScalarProperty Name="StepName" ColumnName="StepName" />
+                <ScalarProperty Name="MethodologyID" ColumnName="MethodologyID" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_Officials">
+            <EntityTypeMapping TypeName="TQMModel.TQM_Officials">
+              <MappingFragment StoreEntitySet="TQM_Officials">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="EmpEmail" ColumnName="EmpEmail" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_Role">
+            <EntityTypeMapping TypeName="TQMModel.TQM_Role">
+              <MappingFragment StoreEntitySet="TQM_Role">
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<TQMPG.Models.TQM_Details>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="margin-top:100px;">Approval Page</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SerialNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dept)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Idea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KPI_Dept)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KPI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SynergyModel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransactDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SerialNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmpNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmpName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dept)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Idea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KPI_Dept)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KPI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SynergyModel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransactDate)
+        </td>
+        <td>
+            @Html.ActionLink("Approve", "Approve", new { id = item.SerialNo }) |
+            @Html.ActionLink("Reject", "Reject", new { id = item.SerialNo }) |
+            @Html.ActionLink("Details", "Details", new { id = item.SerialNo })
+
+        </td>
+    </tr>
+}
+
+</table>

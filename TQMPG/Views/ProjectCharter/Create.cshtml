@@ -1,0 +1,495 @@
+﻿@model TQMPG.Models.Project_Charter
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string url = HttpContext.Current.Request.Url.AbsolutePath;
+
+}
+
+
+@{
+    System.Security.Principal.WindowsIdentity identity = HttpContext.Current.Request.LogonUserIdentity;
+    var ntid = identity.Name.Split('\\')[1];
+
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fuid">
+        <h4 style="margin-top:70px;">Project Charter</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.TQMID, htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.EditorFor(model => model.TQMID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width:10%" } })
+                @Html.ValidationMessageFor(model => model.TQMID, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm">
+
+                    <label class="control-label">Business Case :</label>
+                    @Html.TextAreaFor(model => model.Business_Case, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%", maxlength = 300 })
+                    @Html.ValidationMessageFor(model => model.Business_Case, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm">
+                    <label class="control-label">Opportunirt / ROI Statement :</label>
+                    @Html.TextAreaFor(model => model.Opportunity, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%" })
+                    @Html.ValidationMessageFor(model => model.Opportunity, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-sm">
+                    <label class="control-label">Goal Statement :</label>
+
+                    @Html.TextAreaFor(model => model.Goal, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%" })
+                    @Html.ValidationMessageFor(model => model.Goal, "", new { @class = "text-danger" })
+
+
+
+                </div>
+                <div class="col-sm">
+                    <label class="control-label ">Project Scope :</label>
+                    @Html.TextAreaFor(model => model.Scope, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%" })
+                    @Html.ValidationMessageFor(model => model.Scope, "", new { @class = "text-danger" })
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="row">
+
+                <div class="col-sm">
+                    <label class="control-label">Project Type / Methodology</label>
+                    @Html.DropDownList("MethodologyID", null, "---Select One---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MethodologyID, "", new { @class = "text-danger" })
+
+                    <input type="text" id="projectMethod" name="projectMethod" value="" hidden />
+
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label class="control-label">Risk Assessment</label>
+
+                        <select class="form-control" name="methodologyID" id="methodologyID">
+                            <option value="Default" disabled selected>Default</option>
+                            <option value="Low">Success Probability Low</option>
+                            <option value="Medium">Success Probability Medium</option>
+                            <option value="High">Success Probability High</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="background-color:red" />
+
+        <center><h3>PROJECT PLAN</h3></center>
+        <div class="form-group">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Step Number</th>
+                        <th>Plan Start</th>
+                        <th id="remark-td">Plan End</th>
+                    </tr>
+                </thead>
+                <tbody id="planBody">
+
+                    <tr id="PlanButton">
+
+                        <td id="planButtonArea" name="planButtonArea" colspan="4" class="text-center"><input id="addPlanButton" name="addPlanButton" value="Add Plan" class="btn btn-plan" /></td>
+
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div id="hidden-input">
+
+        </div>
+
+        <center><h3>TEAM STRUCTURE</h3></center>
+        <div class="form-group">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Name</th>
+                        <th id="remark-td">EMPID</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <thead id="teamBody">
+                    <tr>
+                        <td>Sponsor</td>
+                        <td><input class="form-control" type="text" id="sponsorEmpName" name="sponsorEmpName" /></td>
+                        <td><input class="form-control" type="text" id="sponsorEmpID" name="sponsorEmpID" readonly /></td>
+                        <td><input class="form-control" type="text" id="sponsorEmail" name="sponsorEmail" readonly /></td>
+
+                    </tr>
+                    <tr>
+                        <td>Champion</td>
+                        <td>
+                            @Html.DropDownList("ChampionSelection", null, "---Select One---", new { @class = "form-control" })
+                            @*@Html.ValidationMessageFor(model => model.MethodologyID, "", new { @class = "text-danger" })*@
+                        </td>
+                        <td><input class="form-control" type="text" id="championEmpID" name="championEmpID" readonly /></td>
+                        <td><input class="form-control" type="text" id="championEmail" name="championEmail" readonly /></td>
+
+                    </tr>
+                    <tr>
+                        <td>Facilitator</td>
+                        <td><input class="form-control" type="text" id="facilitatorName" name="facilitatorName" readonly /></td>
+                        <td><input class="form-control" type="text" id="facilitatorEmpID" name="facilitatorEmpID" readonly /></td>
+                        <td><input class="form-control" type="text" id="facilitatorEmail" name="facilitatorEmail" readonly /></td>
+
+                    </tr>
+                    <tr>
+                        <td>Diagnostician 1</td>
+                        <td><input class="form-control" type="text" id="diagnosticianName1" name="diagnosticianName1" readonly /></td>
+                        <td><input class="form-control" type="text" id="diagnosticianEmpID1" name="diagnosticianEmpID1" readonly /></td>
+                        <td><input class="form-control" type="text" id="diagnosticianEmail1" name="diagnosticianEmail1" readonly /></td>
+
+                    </tr>
+                    <tr>
+                        <td>Diagnostician 2</td>
+                        <td><input class="form-control" type="text" id="diagnosticianName2" name="diagnosticianName2" readonly /></td>
+                        <td><input class="form-control" type="text" id="diagnosticianEmpID2" name="diagnosticianEmpID2" readonly /></td>
+                        <td><input class="form-control" type="text" id="diagnosticianEmail2" name="diagnosticianEmail2" readonly /></td>
+
+                    </tr>
+                    <tr>
+                        <td>Finance</td>
+                        <td>
+                            @Html.DropDownList("FinanceName", null, "---Select One---", new { @class = "form-control" })
+                            @*@Html.ValidationMessageFor(model => model.MethodologyID, "", new { @class = "text-danger" })*@
+
+
+                        </td>
+                        <td><input class="form-control" type="text" id="financeEmpID" name="financeEmpID" readonly /></td>
+                        <td><input class="form-control" type="text" id="financeEmail" name="financeEmail" readonly /></td>
+
+                    </tr>
+                    <tr>
+                        <td>Leader</td>
+                        <td><input class="form-control" type="text" id="leaderName" name="leaderName" readonly /></td>
+                        <td><input class="form-control" type="text" id="leaderEmpID" name="leaderEmpID" readonly /></td>
+                        <td><input class="form-control" type="text" id="leaderEmail" name="leaderEmail" readonly /></td>
+
+                    </tr>
+
+                </thead>
+                <tr><td colspan="4" class="text-center"><input value="Add Team" class="btn btn-team" data-toggle="modal" data-target="#teamStructure" /></td></tr>
+            </table>
+        </div>
+        <div id="hidden-input">
+
+        </div>
+        <hr style="background-color:red" />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+<div class="modal fade" id="planStructure" tabindex="-1" role="dialog" aria-labelledby="planStructure" aria-hidden="true">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ADD PLAN : <label style="background-color:chartreuse" class="control-label method-label"></label> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+
+
+                <label class="control-label step-label"></label><input class="form-control" type="text" data-stepno="" id="stepname" name="stepname" />
+                <label class="control-label">Plan Start :</label><input class="form-control" type="date" id="dateStart" name="dateStart" />
+                <label class="control-label">Plan End :</label><input class="form-control" type="date" id="dateEnd" name="dateEnd" />
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="nextstep">Next Step</button>
+
+
+                <button type="button" id="submitPlan" name="submitPlan" class="btn btn-primary" hidden>Submit </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="teamStructure" tabindex="-1" role="dialog" aria-labelledby="teamStructure" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ADD TEAM MEMBERS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <div>
+
+                        <div class="container">
+                            <label class="control-label">Members :</label>
+                        </div>
+                        <div class="container">
+                            @Html.DropDownList("EmployeeName", null, "---Select One---", new { @class = "form-control" })
+                            @*@Html.ValidationMessageFor(model => model.MethodologyID, "", new { @class = "text-danger" })*@
+                        </div>
+
+                    </div>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="addMember" name="addMember">Add Member</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var url = "@url";
+    var steps = "";
+    $(document).ready(function () {
+        getSponsors();
+    });
+    $("#addPlanButton").click(function () {
+        getMethodologyDetails();
+    });
+    function getMethodologyDetails() {
+        methodologyID = $("#MethodologyID").val();
+        if (methodologyID == "") {
+            alert("Please Select Project Type");
+            return false;
+        }
+        else {
+            $("#MethodologyID").prop("disabled", true);
+            projectMethod = $("#MethodologyID").val();
+            $("#projectMethod").val(projectMethod);
+            $("#planStructure").modal("show");
+            $.ajax({
+                url: "/TQM/ProjectCharter/MethodologyStep",
+                data: { methodologyID: methodologyID },
+                type: "GET",
+                success: function (data) {
+                    data = JSON.parse(data);
+                    $(".method-label").html(data.MethodologyName);
+                    console.log(data);
+                    window.steps = data.MethodSteps;
+                    $.each(data.MethodSteps, function (index, val) {
+                        console.log(val.StepNumber == 1)
+                        if (val.StepNumber == 1) {
+                            $(".step-label").text(val.StepName)
+                            $("#stepname").attr("data-stepno", val.StepNumber)
+                            $("#stepname").val(val.StepDescription).prop("readonly", true)
+                        }
+                    });
+                }
+            })
+        }
+    }
+    $("#nextstep").click(function () {
+        stepname = $("#stepname").val();
+        stepno = $("#stepname").attr("data-stepno");
+        dateStart = $("#dateStart").val();
+        dateEnd = $("#dateEnd").val();
+        tableHtml = "";
+        tableHtml += "<tr>";
+        tableHtml += "<td>" + stepname + "</td>";
+        tableHtml += "<td>" + stepno + "</td>";
+        tableHtml += "<td>" + dateStart + "</td>";
+        tableHtml += "<td>" + dateEnd + "</td>";
+        tableHtml += "</tr>";
+        $("#planBody").append(tableHtml);
+        var steplength = steps.length;
+        var newStepNo = parseInt(stepno) + 1;
+        $.each(steps, function (index, val) {
+            if (val.StepNumber == newStepNo) {
+                $(".step-label").text(val.StepName)
+                $("#stepname").attr("data-stepno", val.StepNumber)
+                $("#stepname").val(val.StepDescription).prop("readonly", true)
+            }
+            if (newStepNo > steplength) {
+                $("#planStructure").modal("hide");
+                $("#planButtonArea").prop("hidden", true);
+            }
+        });
+    })
+         $.ajax({
+             url: "http://adpgintranet2.web.analog.com/webApi/api/getuser/q?ntid=@ntid",
+             type: "GET",
+             crossDomain: true,
+             success: function (data) {
+                 console.log(data);
+                 var empno = data["Properties"]["extensionattribute1"]['0'];
+                 var empMail = data["Properties"]["mail"];
+                 $("#leaderEmpID").val(empno);
+                 $("#leaderEmail").val(empMail);
+                 getEmpName(empno);
+            }
+        });
+    function getEmpName(empno) {
+
+
+            $.ajax({
+                url: "http://localhost:4503/TQM/ProjectCharter/GetEmpName?empno=54449",
+                type: "GET",
+                data: { empno: empno },
+             success: function (data) {
+                 console.log(data);
+                 data = JSON.parse(data);
+                 $("#leaderName").val(data);
+            }
+        });
+    }
+
+
+    $("#FinanceName").change(function () {
+        financeName = $("#FinanceName").val();
+       
+            $.ajax({
+                url: "/TQM/ProjectCharter/getFinanceDetail",
+                type: "GET",
+                data: { financeName : financeName },
+                success: function (data) {
+                    
+                    data = JSON.parse(data);
+
+                    empEmail = data[0]["EmpEmail"];
+                    empNo = data[0]["EmpNo"];
+
+                    $("#financeEmpID").val(empNo);
+                    $("#financeEmail").val(empEmail);
+                    
+                }
+            });
+    });
+
+    $('#ChampionSelection').change(function () {
+        empEmail = $("#ChampionSelection").val();
+
+        $.ajax({
+            url: "/TQM/ProjectCharter/getEmpDetails",
+            type: "GET",
+            data: { empEmail: empEmail },
+            success: function (data) {
+
+                data = JSON.parse(data);
+
+                console.log(data);
+                $('#championEmail').val(data[0]["empEmail"]);
+
+                $('#championEmpID').val(data[0]["empEmployeeNo"]);
+
+            }
+        });
+    });
+
+    $('#addMember').click(function () {
+
+        memberName = $("#EmployeeName").val();
+
+        tableHtml = "";
+        tableHtml += "<tr>";
+        tableHtml += "<td> Member </td>";
+        tableHtml += "<td>" + memberName + "</td>";
+        tableHtml += "<td>" + memberName + "</td>";
+        tableHtml += "<td>" + memberName + "</td>";
+        tableHtml += "</tr>";
+        $("#teamBody").append(tableHtml);
+    })
+
+    function getSponsors() {
+
+        tqmid = $('#TQMID').val();
+
+
+        $.ajax({
+            url: "/TQM/ProjectCharter/getSponsorDetails",
+            type: "GET",
+            data: { tqmid: tqmid },
+            success: function (data) {
+                
+                data = JSON.parse(data);
+         
+
+                if (data[0]["Dept"] == data[0]["Dept_Name"]) {
+                    //alert("Equal");
+
+                    deptName = data[0]["Dept"];
+
+                    $.ajax({
+                        url: "/TQM/ProjectCharter/getDeptSponsor",
+                        type: "GET",
+                        data: { deptName: deptName },
+                        success: function (data1) {
+
+                           
+                            data1 = JSON.parse(data1);
+                           
+                            console.log(data1);
+
+                            $("#sponsorEmpName").val(data1[0]["Dept_Mgr"]);ss
+                            $("#sponsorEmpName").prop("readonly", true);
+                            $("#sponsorEmpID").val(data1[0]["Dept_Mgr_EmpID"]);
+                            $("#sponsorEmail").val(data1[0]["Dept_Mgr_Email"]);
+
+                        }
+
+                    });
+
+
+                }
+                else {
+                    alert("Not Equal");
+                }
+
+            }
+        });
+
+
+    }
+
+  
+
+</script>
