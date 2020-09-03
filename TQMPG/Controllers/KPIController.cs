@@ -39,7 +39,7 @@ namespace TQMPG.Controllers
         public ActionResult Create()
         {
 
-            ViewBag.KPI_DeptID = new SelectList(db.KPI_Dept, "AutoID", "Dept");
+            ViewBag.KPI_DeptID = new SelectList(db.KPI_Dept, "AutoID", "Dept_Name");
             return View();
         }
 

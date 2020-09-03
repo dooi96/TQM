@@ -21,7 +21,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="container-fuid">
+    <div class="container">
         <h4 style="margin-top:70px;">Project Charter</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -106,6 +106,7 @@
                         <th>Step Number</th>
                         <th>Plan Start</th>
                         <th id="remark-td">Plan End</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="planBody">
@@ -139,7 +140,14 @@
                 <thead id="teamBody">
                     <tr>
                         <td>Sponsor</td>
-                        <td><input class="form-control" type="text" id="sponsorEmpName" name="sponsorEmpName" /></td>
+                        <td id="inputSponsor" name="inputSponsor"><input class="form-control" type="text" id="sponsorEmpName" name="sponsorEmpName" /></td>
+                        <td id="selectSponsor" name="selectSponsor" hidden>
+                            <select class="form-control" id="sponsorEmpNameDrop" name="sponsorEmpNameDrop">
+                                <option value="">-- Select Sponsor --</option>
+                                <option id="sponsorID1" name="sponsorID1"></option>
+                                <option id="sponsorID2" name="sponsorID2"></option>
+                            </select>
+                        </td>
                         <td><input class="form-control" type="text" id="sponsorEmpID" name="sponsorEmpID" readonly /></td>
                         <td><input class="form-control" type="text" id="sponsorEmail" name="sponsorEmail" readonly /></td>
 
@@ -286,10 +294,49 @@
     </div>
 </div>
 
+<div class="modal fade" id="editDateModal" tabindex="-1" role="dialog" aria-labelledby="editDateModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Date Editor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <div>
+
+                        <div class="container">
+
+                            <label class="control-label step-label"></label><input class="form-control" type="text" data-stepno="" id="stepname" name="stepname" />
+                            <label class="control-label">Plan Start :</label><input class="form-control" type="date" id="dateStart" name="dateStart" />
+                            <label class="control-label">Plan End :</label><input class="form-control" type="date" id="dateEnd" name="dateEnd" />
+                        </div>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="addMember" name="addMember">Add Member</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script type="text/javascript">
     var url = "@url";
     var steps = "";
+
+
+
+    $(document).on("click", "#editDate", function () {
+        row = $(this).attr("editDate-id");
+        $('#editDateModal').modal('show');
+        //alert(row);
+    });
+
     $(document).ready(function () {
         getSponsors();
     });
@@ -337,8 +384,9 @@
         tableHtml += "<tr>";
         tableHtml += "<td>" + stepname + "</td>";
         tableHtml += "<td>" + stepno + "</td>";
-        tableHtml += "<td>" + dateStart + "</td>";
-        tableHtml += "<td>" + dateEnd + "</td>";
+        tableHtml += "<td><input class='form-control' type='text' id='dateStart" + stepno + "' name='dateStart" + stepno + "'   value='" + dateStart + "' readonly /></td>";
+        tableHtml += "<td><input class='form-control' type='text' id='dateEnd" + stepno + "' name='dateEnd" + stepno + "'   value='" + dateEnd + "' readonly /></td>";
+        tableHtml += "<td><input type='button' value='Edit'  id='editDate' name='editDate' editDate-id='"+stepno+"' class='form-control'></td>"
         tableHtml += "</tr>";
         $("#planBody").append(tableHtml);
         var steplength = steps.length;
@@ -386,13 +434,13 @@
 
     $("#FinanceName").change(function () {
         financeName = $("#FinanceName").val();
-       
+
             $.ajax({
                 url: "/TQM/ProjectCharter/getFinanceDetail",
                 type: "GET",
                 data: { financeName : financeName },
                 success: function (data) {
-                    
+
                     data = JSON.parse(data);
 
                     empEmail = data[0]["EmpEmail"];
@@ -400,18 +448,18 @@
 
                     $("#financeEmpID").val(empNo);
                     $("#financeEmail").val(empEmail);
-                    
+
                 }
             });
     });
 
     $('#ChampionSelection').change(function () {
-        empEmail = $("#ChampionSelection").val();
+        empName = $("#ChampionSelection").val();
 
         $.ajax({
             url: "/TQM/ProjectCharter/getEmpDetails",
             type: "GET",
-            data: { empEmail: empEmail },
+            data: { empName: empName },
             success: function (data) {
 
                 data = JSON.parse(data);
@@ -425,19 +473,65 @@
         });
     });
 
+
+    var counter = 0;
+
     $('#addMember').click(function () {
 
-        memberName = $("#EmployeeName").val();
+        counter++;
 
-        tableHtml = "";
-        tableHtml += "<tr>";
-        tableHtml += "<td> Member </td>";
-        tableHtml += "<td>" + memberName + "</td>";
-        tableHtml += "<td>" + memberName + "</td>";
-        tableHtml += "<td>" + memberName + "</td>";
-        tableHtml += "</tr>";
-        $("#teamBody").append(tableHtml);
+        empName = $("#EmployeeName").val();
+
+        $.ajax({
+            url: "/TQM/ProjectCharter/getEmpDetails",
+            type: "GET",
+            data: { empName: empName },
+            success: function (data) {
+
+                data = JSON.parse(data);
+
+                console.log(data);
+
+                if (counter > 7) {
+                    alert("You have reached the limit members!");
+                }
+                else {
+
+                    empId = data[0]["empEmployeeNo"];
+                    empEmail = data[0]["empEmail"];
+
+                    tableHtml = "";
+                    tableHtml += "<tr>";
+                    tableHtml += "<td> Member </td>";
+                    tableHtml += "<td><input class='form-control' type='text' id='memberName" + counter + "' name='memberName" + counter + "'  value='" + empName + "' readonly /></td>";
+                    tableHtml += "<td><input class='form-control' type='text' id='memberID" + counter + "' name='memberID" + counter + "'   value='" + empId + "' readonly /></td>";
+                    tableHtml += "<td><input class='form-control' type='text' id='memberEmail" + counter + "' name='memberEmail" + counter + "'   value='" + empEmail + "' readonly /></td>";
+                    tableHtml += "</tr>";
+
+                    $("#teamBody").append(tableHtml);
+                }
+
+
+            }
+        });
+
+
+
+
+
+
+
     })
+
+
+
+
+    $("#sponsorEmpNameDrop").change(function () {
+        console.log();
+        $("#sponsorEmpID").val($(this).children("option:selected").attr("data-empno"));
+        $("#sponsorEmail").val($(this).children("option:selected").attr("data-email"));
+
+    });
 
     function getSponsors() {
 
@@ -449,9 +543,9 @@
             type: "GET",
             data: { tqmid: tqmid },
             success: function (data) {
-                
+
                 data = JSON.parse(data);
-         
+
 
                 if (data[0]["Dept"] == data[0]["Dept_Name"]) {
                     //alert("Equal");
@@ -464,9 +558,9 @@
                         data: { deptName: deptName },
                         success: function (data1) {
 
-                           
+
                             data1 = JSON.parse(data1);
-                           
+
                             console.log(data1);
 
                             $("#sponsorEmpName").val(data1[0]["Dept_Mgr"]);
@@ -481,7 +575,46 @@
 
                 }
                 else {
-                    alert("Not Equal");
+                    //alert("Not Equal");
+
+                    $.ajax({
+                        url: "/TQM/ProjectCharter/getBothDeptSponsor",
+                        type: "GET",
+                        data: {
+                            deptName1: data[0]["Dept"],
+                        deptName2: data[0]["Dept_Name"]},
+                        success: function (data2) {
+
+
+                            data2 = JSON.parse(data2);
+                            //console.log(data2);
+
+                            $("#selectSponsor").prop("hidden", false);
+                            $("#inputSponsor").prop("hidden", true);
+
+
+                            $("#sponsorID1").val(data2[0]["Dept_Mgr"]);
+                            $("#sponsorID2").val(data2[1]["Dept_Mgr"]);
+
+
+                            $("#sponsorID1").attr("data-empNo", data2[0]["Dept_Mgr_EmpID"]);
+                            $("#sponsorID2").attr("data-empNo", data2[1]["Dept_Mgr_EmpID"]);
+
+                            $("#sponsorID1").attr("data-email", data2[0]["Dept_Mgr_Email"]);
+                            $("#sponsorID2").attr("data-email", data2[1]["Dept_Mgr_Email"]);
+
+                            $("#sponsorID1").html(data2[0]["Dept_Mgr"]);
+                            $("#sponsorID2").html(data2[1]["Dept_Mgr"]);
+
+
+
+                        }
+
+                    });
+
+
+
+
                 }
 
             }
@@ -490,6 +623,6 @@
 
     }
 
-  
+
 
 </script>

@@ -21,6 +21,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Dept_Mgr_Email)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dept_Mgr_EmpID)
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -34,7 +37,11 @@
 
         <td>
             @Html.DisplayFor(modelItem => item.Dept_Mgr_Email)
-        </td>        <td>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dept_Mgr_EmpID)
+        </td>
+        <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.AutoID }) |
             @Html.ActionLink("Details", "Details", new { id = item.AutoID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.AutoID })

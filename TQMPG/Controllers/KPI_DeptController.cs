@@ -45,7 +45,7 @@ namespace TQMPG.Controllers
 
             ViewBag.Dept_Name = new SelectList(eleave.v_eLeave_EmployeeDetails, "preDeptDesc", "preDeptDesc");
 
-            ViewBag.Dept_Mgr = new SelectList(eleave.v_eLeave_EmployeeDetails, "empFullName", "empFullName");
+            ViewBag.Dept_Mgr = new SelectList(eleave.v_eLeave_EmployeeDetails.OrderBy(x=>x.empFullName), "empFullName", "empFullName");
             return View();
         }
 
@@ -54,10 +54,11 @@ namespace TQMPG.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AutoID,Dept,Dept_Mgr,Dept_Mgr_Email")] KPI_Dept kPI_Dept)
+        public ActionResult Create([Bind(Include = "AutoID,Dept_Name,Dept_Mgr,Dept_Mgr_Email,Dept_Mgr_EmpID")] KPI_Dept kPI_Dept)
         {
             if (ModelState.IsValid)
             {
+                
                 db.KPI_Dept.Add(kPI_Dept);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -90,11 +91,12 @@ namespace TQMPG.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AutoID,Dept,Dept_Mgr,Dept_Mgr_Email,Dept_Mgr_EmpID")] KPI_Dept kPI_Dept)
+        public ActionResult Edit([Bind(Include = "AutoID,Dept_Name,Dept_Mgr,Dept_Mgr_Email,Dept_Mgr_EmpID")] KPI_Dept kPI_Dept)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(kPI_Dept).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

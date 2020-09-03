@@ -144,7 +144,7 @@ namespace TQMPG.Controllers
         public ActionResult getEmpDetails()
         {
 
-            var empEmail = Request.QueryString["empEmail"];
+            var empEmail = Request.QueryString["empName"];
 
 
             eLeaveEntities eleave = new eLeaveEntities();
@@ -235,6 +235,25 @@ namespace TQMPG.Controllers
             var result = serialize.Serialize(query);
 
 
+
+            return Content(result);
+        }
+
+
+        public ActionResult getBothDeptSponsor()
+        {
+            var ownDeptName = Request.QueryString["deptName1"];
+            var kpiDeptName = Request.QueryString["deptName2"];
+
+            var query = from x in db.KPI_Dept
+
+                        where x.Dept_Name == ownDeptName || x.Dept_Name == kpiDeptName
+
+                        select new { x.Dept_Name, x.Dept_Mgr_Email, x.Dept_Mgr, x.Dept_Mgr_EmpID };
+
+            var serialize = new JavaScriptSerializer();
+
+            var result = serialize.Serialize(query);
 
             return Content(result);
         }

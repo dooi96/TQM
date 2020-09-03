@@ -41,7 +41,7 @@ namespace TQMPG.Controllers
         // GET: StorySubmit/Create
         public ActionResult Create()
         {
-            ViewBag.KPI_Dept = new SelectList(db.KPI_Dept, "AutoID", "Dept");
+            ViewBag.KPI_Dept = new SelectList(db.KPI_Dept.OrderBy(x=>x.Dept_Name), "AutoID", "Dept_Name");
             ViewBag.KPI = new SelectList(db.KPIs, "KPI_DeptID", "KPI1");
             return View();
         }

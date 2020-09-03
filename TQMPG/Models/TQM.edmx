@@ -27,7 +27,7 @@
             <PropertyRef Name="AutoID" />
           </Key>
           <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Dept_Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Dept_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Dept_Mgr" Type="nvarchar" MaxLength="25" />
           <Property Name="Dept_Mgr_Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Dept_Mgr_EmpID" Type="int" />
@@ -195,7 +195,7 @@
             <PropertyRef Name="AutoID" />
           </Key>
           <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Dept_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Dept_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Dept_Mgr" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="Dept_Mgr_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Dept_Mgr_EmpID" Type="Int32" />
