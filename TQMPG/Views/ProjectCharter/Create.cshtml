@@ -298,26 +298,27 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Date Editor</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Date Modification</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+              
                 <center>
-                    <div>
+                    
 
-                        <div class="container">
+                    <div class="container">
 
-                            <label class="control-label step-label"></label><input class="form-control" type="text" data-stepno="" id="stepname" name="stepname" />
-                            <label class="control-label">Plan Start :</label><input class="form-control" type="date" id="dateStart" name="dateStart" />
-                            <label class="control-label">Plan End :</label><input class="form-control" type="date" id="dateEnd" name="dateEnd" />
-                        </div>
+                        <input class="form-control" type="number" id="tempData" name="tempData" value="" hidden/>
+                        <label class="control-label">Plan Start :</label><input class="form-control" type="date" id="editDateStart" name="editDateStart" />
+                        <label class="control-label">Plan End :</label><input class="form-control" type="date" id="editDateEnd" name="editDateEnd" />
+                    </div>
                 </center>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="addMember" name="addMember">Add Member</button>
+                <button type="button" class="btn btn-primary" id="updateDate" name="updateDate">Update Date</button>
             </div>
         </div>
     </div>
@@ -331,11 +332,28 @@
 
 
 
-    $(document).on("click", "#editDate", function () {
+    $(document).on("click", ".editDate", function () {
         row = $(this).attr("editDate-id");
         $('#editDateModal').modal('show');
-        //alert(row);
+        $("#tempData").val(row);
+        //alert(row);''
+       
     });
+
+    $("#updateDate").click(function () {
+        $('#editDateModal').modal('hide');
+        index = $("#tempData").val();
+        updDateStart = $("#editDateStart").val();
+        updDateEnd = $("#editDateEnd").val();
+  
+        $("#dateStart" + index).val(updDateStart);
+        $("#dateEnd" + index).val(updDateEnd);
+        $("#editDateStart").val("");
+        $("#editDateEnd").val("");
+
+
+    });
+
 
     $(document).ready(function () {
         getSponsors();
@@ -376,32 +394,43 @@
         }
     }
     $("#nextstep").click(function () {
+
+        
         stepname = $("#stepname").val();
         stepno = $("#stepname").attr("data-stepno");
         dateStart = $("#dateStart").val();
         dateEnd = $("#dateEnd").val();
-        tableHtml = "";
-        tableHtml += "<tr>";
-        tableHtml += "<td>" + stepname + "</td>";
-        tableHtml += "<td>" + stepno + "</td>";
-        tableHtml += "<td><input class='form-control' type='text' id='dateStart" + stepno + "' name='dateStart" + stepno + "'   value='" + dateStart + "' readonly /></td>";
-        tableHtml += "<td><input class='form-control' type='text' id='dateEnd" + stepno + "' name='dateEnd" + stepno + "'   value='" + dateEnd + "' readonly /></td>";
-        tableHtml += "<td><input type='button' value='Edit'  id='editDate' name='editDate' editDate-id='"+stepno+"' class='form-control'></td>"
-        tableHtml += "</tr>";
-        $("#planBody").append(tableHtml);
-        var steplength = steps.length;
-        var newStepNo = parseInt(stepno) + 1;
-        $.each(steps, function (index, val) {
-            if (val.StepNumber == newStepNo) {
-                $(".step-label").text(val.StepName)
-                $("#stepname").attr("data-stepno", val.StepNumber)
-                $("#stepname").val(val.StepDescription).prop("readonly", true)
-            }
-            if (newStepNo > steplength) {
-                $("#planStructure").modal("hide");
-                $("#planButtonArea").prop("hidden", true);
-            }
-        });
+
+        if (dateStart == "" || dateEnd == "") {
+            alert("Missing Date! Please Try Again");
+        }
+        else {
+            tableHtml = "";
+            tableHtml += "<tr>";
+            tableHtml += "<td>" + stepname + "</td>";
+            tableHtml += "<td>" + stepno + "</td>";
+            tableHtml += "<td><input class='form-control' type='text' id='dateStart" + stepno + "' name='dateStart" + stepno + "'   value='" + dateStart + "' readonly /></td>";
+            tableHtml += "<td><input class='form-control' type='text' id='dateEnd" + stepno + "' name='dateEnd" + stepno + "'   value='" + dateEnd + "' readonly /></td>";
+            tableHtml += "<td><input class='editDate' type='button' value='Update'  id='editDate" + stepno + "' name='editDate" + stepno + "' editDate-id='" + stepno + "' class='form-control'></td>"
+            tableHtml += "</tr>";
+            $("#planBody").append(tableHtml);
+            var steplength = steps.length;
+            var newStepNo = parseInt(stepno) + 1;
+            $.each(steps, function (index, val) {
+                if (val.StepNumber == newStepNo) {
+                    $(".step-label").text(val.StepName)
+                    $("#stepname").attr("data-stepno", val.StepNumber)
+                    $("#stepname").val(val.StepDescription).prop("readonly", true)
+                }
+                if (newStepNo > steplength) {
+                    $("#planStructure").modal("hide");
+                    $("#planButtonArea").prop("hidden", true);
+                }
+            });
+            $("#dateStart").val("");
+            $("#dateEnd").val("");
+        }
+      
     })
          $.ajax({
              url: "http://adpgintranet2.web.analog.com/webApi/api/getuser/q?ntid=@ntid",
@@ -478,7 +507,7 @@
 
     $('#addMember').click(function () {
 
-        counter++;
+      
 
         empName = $("#EmployeeName").val();
 
@@ -492,7 +521,7 @@
 
                 console.log(data);
 
-                if (counter > 7) {
+                if (counter >= 7) {
                     alert("You have reached the limit members!");
                 }
                 else {
@@ -508,7 +537,16 @@
                     tableHtml += "<td><input class='form-control' type='text' id='memberEmail" + counter + "' name='memberEmail" + counter + "'   value='" + empEmail + "' readonly /></td>";
                     tableHtml += "</tr>";
 
-                    $("#teamBody").append(tableHtml);
+                    if ($("#memberID0").val() == empId || $("#memberID1").val() == empId || $("#memberID2").val() == empId || $("#memberID3").val() == empId || $("#memberID4").val() == empId || $("#memberID5").val() == empId || $("#memberID6").val() == empId) {
+                        alert("Team Member already exist, please select others");
+                    }
+                    else {
+
+                        $("#teamBody").append(tableHtml);
+                        counter++;
+                    }
+
+                  
                 }
 
 
