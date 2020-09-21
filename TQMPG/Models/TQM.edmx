@@ -36,13 +36,13 @@
           <Key>
             <PropertyRef Name="TQMID" />
           </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TQMID" Type="int" Nullable="false" />
           <Property Name="Business_Case" Type="varchar" MaxLength="50" />
           <Property Name="Opportunity" Type="varchar" MaxLength="50" />
           <Property Name="Risk_Assessment" Type="varchar" MaxLength="50" />
-          <Property Name="Goal" Type="int" />
-          <Property Name="Scope" Type="int" />
-          <Property Name="Project_Plan" Type="int" />
+          <Property Name="Goal" Type="varchar" MaxLength="50" />
+          <Property Name="Scope" Type="varchar" MaxLength="50" />
           <Property Name="MethodologyID" Type="int" />
           <Property Name="CurrentStep" Type="int" />
         </EntityType>
@@ -115,6 +115,16 @@
           <Property Name="EmpEmail" Type="nvarchar" MaxLength="50" />
           <Property Name="RoleID" Type="int" />
         </EntityType>
+        <EntityType Name="TQM_Project_Plan">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TQMID" Type="int" />
+          <Property Name="MethodologyStepID" Type="int" />
+          <Property Name="PlanStart" Type="date" />
+          <Property Name="PlanEnd" Type="date" />
+        </EntityType>
         <EntityType Name="TQM_Role">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -146,6 +156,7 @@
           <EntitySet Name="TQM_Methodology" EntityType="Self.TQM_Methodology" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TQM_MethodologyStep" EntityType="Self.TQM_MethodologyStep" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TQM_Officials" EntityType="Self.TQM_Officials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_Project_Plan" EntityType="Self.TQM_Project_Plan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TQM_Role" EntityType="Self.TQM_Role" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_TQM_Member_TQM_Role" Association="Self.FK_TQM_Member_TQM_Role">
             <End Role="TQM_Role" EntitySet="TQM_Role" />
@@ -167,6 +178,7 @@
           <EntitySet Name="TQM_Methodology" EntityType="TQMModel.TQM_Methodology" />
           <EntitySet Name="TQM_MethodologyStep" EntityType="TQMModel.TQM_MethodologyStep" />
           <EntitySet Name="TQM_Officials" EntityType="TQMModel.TQM_Officials" />
+          <EntitySet Name="TQM_Project_Plan" EntityType="TQMModel.TQM_Project_Plan" />
           <EntitySet Name="TQM_Role" EntityType="TQMModel.TQM_Role" />
           <AssociationSet Name="FK_TQM_Member_TQM_Role" Association="TQMModel.FK_TQM_Member_TQM_Role">
             <End Role="TQM_Role" EntitySet="TQM_Role" />
@@ -204,13 +216,13 @@
           <Key>
             <PropertyRef Name="TQMID" />
           </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TQMID" Type="Int32" Nullable="false" />
           <Property Name="Business_Case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Opportunity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Risk_Assessment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Goal" Type="Int32" />
-          <Property Name="Scope" Type="Int32" />
-          <Property Name="Project_Plan" Type="Int32" />
+          <Property Name="Goal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Scope" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MethodologyID" Type="Int32" />
           <Property Name="CurrentStep" Type="Int32" />
         </EntityType>
@@ -284,6 +296,16 @@
           <Property Name="EmpEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RoleID" Type="Int32" />
         </EntityType>
+        <EntityType Name="TQM_Project_Plan">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TQMID" Type="Int32" />
+          <Property Name="MethodologyStepID" Type="Int32" />
+          <Property Name="PlanStart" Type="DateTime" Precision="0" />
+          <Property Name="PlanEnd" Type="DateTime" Precision="0" />
+        </EntityType>
         <EntityType Name="TQM_Role">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -346,13 +368,13 @@
               <MappingFragment StoreEntitySet="Project_Charter">
                 <ScalarProperty Name="CurrentStep" ColumnName="CurrentStep" />
                 <ScalarProperty Name="MethodologyID" ColumnName="MethodologyID" />
-                <ScalarProperty Name="Project_Plan" ColumnName="Project_Plan" />
                 <ScalarProperty Name="Scope" ColumnName="Scope" />
                 <ScalarProperty Name="Goal" ColumnName="Goal" />
                 <ScalarProperty Name="Risk_Assessment" ColumnName="Risk_Assessment" />
                 <ScalarProperty Name="Opportunity" ColumnName="Opportunity" />
                 <ScalarProperty Name="Business_Case" ColumnName="Business_Case" />
                 <ScalarProperty Name="TQMID" ColumnName="TQMID" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -427,6 +449,17 @@
                 <ScalarProperty Name="EmpEmail" ColumnName="EmpEmail" />
                 <ScalarProperty Name="EmpName" ColumnName="EmpName" />
                 <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_Project_Plan">
+            <EntityTypeMapping TypeName="TQMModel.TQM_Project_Plan">
+              <MappingFragment StoreEntitySet="TQM_Project_Plan">
+                <ScalarProperty Name="PlanEnd" ColumnName="PlanEnd" />
+                <ScalarProperty Name="PlanStart" ColumnName="PlanStart" />
+                <ScalarProperty Name="MethodologyStepID" ColumnName="MethodologyStepID" />
+                <ScalarProperty Name="TQMID" ColumnName="TQMID" />
                 <ScalarProperty Name="AutoID" ColumnName="AutoID" />
               </MappingFragment>
             </EntityTypeMapping>

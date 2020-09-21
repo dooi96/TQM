@@ -136,6 +136,7 @@
     <Compile Include="Controllers\LoginInfoController.cs" />
     <Compile Include="Controllers\ProjectCharterController.cs" />
     <Compile Include="Controllers\StorySubmitController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -197,6 +198,9 @@
       <DependentUpon>TQM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TQM_Officials.cs">
+      <DependentUpon>TQM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TQM_Project_Plan.cs">
       <DependentUpon>TQM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TQM_Role.cs">
@@ -317,10 +321,12 @@
     <Content Include="Views\ProjectCharter\Details.cshtml" />
     <Content Include="Views\ProjectCharter\Edit.cshtml" />
     <Content Include="Views\ProjectCharter\Index.cshtml" />
+    <Content Include="Views\Upload\UploadFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="SynergyModels\" />
+    <Folder Include="UploadedFiles\" />
     <Folder Include="Views\LoginInfo\" />
   </ItemGroup>
   <ItemGroup>

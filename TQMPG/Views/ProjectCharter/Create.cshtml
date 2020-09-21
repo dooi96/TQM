@@ -39,19 +39,19 @@
                 <div class="col-sm">
 
                     <label class="control-label">Business Case :</label>
-                    @Html.TextAreaFor(model => model.Business_Case, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%", maxlength = 300 })
+                    @Html.TextAreaFor(model => model.Business_Case, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%", maxlength = 300, required = "required" })
                     @Html.ValidationMessageFor(model => model.Business_Case, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-sm">
                     <label class="control-label">Opportunirt / ROI Statement :</label>
-                    @Html.TextAreaFor(model => model.Opportunity, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%" })
+                    @Html.TextAreaFor(model => model.Opportunity, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%", required = "required" })
                     @Html.ValidationMessageFor(model => model.Opportunity, "", new { @class = "text-danger" })
 
                 </div>
                 <div class="col-sm">
                     <label class="control-label">Goal Statement :</label>
 
-                    @Html.TextAreaFor(model => model.Goal, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%" })
+                    @Html.TextAreaFor(model => model.Goal, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%", required = "required" })
                     @Html.ValidationMessageFor(model => model.Goal, "", new { @class = "text-danger" })
 
 
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-sm">
                     <label class="control-label ">Project Scope :</label>
-                    @Html.TextAreaFor(model => model.Scope, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%" })
+                    @Html.TextAreaFor(model => model.Scope, new { htmlAttributes = new { @class = "form-control" }, style = "width:100%", required = "required" })
                     @Html.ValidationMessageFor(model => model.Scope, "", new { @class = "text-danger" })
 
 
@@ -74,17 +74,18 @@
 
                 <div class="col-sm">
                     <label class="control-label">Project Type / Methodology</label>
-                    @Html.DropDownList("MethodologyID", null, "---Select One---", new { @class = "form-control" })
+                    @Html.DropDownList("MethodologyID", null, "---Select One---", new { @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(model => model.MethodologyID, "", new { @class = "text-danger" })
 
                     <input type="text" id="projectMethod" name="projectMethod" value="" hidden />
+
 
                 </div>
                 <div class="col-sm">
                     <div class="form-group">
                         <label class="control-label">Risk Assessment</label>
 
-                        <select class="form-control" name="methodologyID" id="methodologyID">
+                        <select class="form-control" name="riskAssessment" id="riskAssessment" required>
                             <option value="Default" disabled selected>Default</option>
                             <option value="Low">Success Probability Low</option>
                             <option value="Medium">Success Probability Medium</option>
@@ -108,17 +109,15 @@
                         <th id="remark-td">Plan End</th>
                         <th>Action</th>
                     </tr>
+
                 </thead>
+
                 <tbody id="planBody">
 
-                    <tr id="PlanButton">
+                    <tr id="PlanButton"></tr>
 
-                        <td id="planButtonArea" name="planButtonArea" colspan="4" class="text-center"><input id="addPlanButton" name="addPlanButton" value="Add Plan" class="btn btn-plan" /></td>
-
-
-                    </tr>
                 </tbody>
-
+                <tr><td id="planButtonArea" name="planButtonArea" colspan="5" class="text-center"><input id="addPlanButton" name="addPlanButton" value="Add Plan" class="btn btn-plan" /></td></tr>
             </table>
         </div>
         <div id="hidden-input">
@@ -147,9 +146,17 @@
                                 <option id="sponsorID1" name="sponsorID1"></option>
                                 <option id="sponsorID2" name="sponsorID2"></option>
                             </select>
+
+                          
                         </td>
-                        <td><input class="form-control" type="text" id="sponsorEmpID" name="sponsorEmpID" readonly /></td>
+                        <td>
+                            <input class="form-control" type="text" id="sponsorEmpID" name="sponsorEmpID" readonly />
+                            <input class="form-control" type="text" id="sponsorDropOpt" name="sponsorDropOpt" value="0" hidden />
+                        </td>
                         <td><input class="form-control" type="text" id="sponsorEmail" name="sponsorEmail" readonly /></td>
+
+                        
+                        
 
                     </tr>
                     <tr>
@@ -329,7 +336,7 @@
 <script type="text/javascript">
     var url = "@url";
     var steps = "";
-
+    var currentSteps = "1";
 
 
     $(document).on("click", ".editDate", function () {
@@ -361,6 +368,10 @@
     $("#addPlanButton").click(function () {
         getMethodologyDetails();
     });
+
+
+
+
     function getMethodologyDetails() {
         methodologyID = $("#MethodologyID").val();
         if (methodologyID == "") {
@@ -379,15 +390,18 @@
                 success: function (data) {
                     data = JSON.parse(data);
                     $(".method-label").html(data.MethodologyName);
-                    console.log(data);
+                    
                     window.steps = data.MethodSteps;
+                    console.log(window.steps);
                     $.each(data.MethodSteps, function (index, val) {
-                        console.log(val.StepNumber == 1)
-                        if (val.StepNumber == 1) {
+                   
+                      
+                        if (val.StepNumber == window.currentSteps) {
                             $(".step-label").text(val.StepName)
                             $("#stepname").attr("data-stepno", val.StepNumber)
                             $("#stepname").val(val.StepDescription).prop("readonly", true)
                         }
+                      
                     });
                 }
             })
@@ -395,7 +409,7 @@
     }
     $("#nextstep").click(function () {
 
-        
+
         stepname = $("#stepname").val();
         stepno = $("#stepname").attr("data-stepno");
         dateStart = $("#dateStart").val();
@@ -408,16 +422,20 @@
             tableHtml = "";
             tableHtml += "<tr>";
             tableHtml += "<td>" + stepname + "</td>";
-            tableHtml += "<td>" + stepno + "</td>";
-            tableHtml += "<td><input class='form-control' type='text' id='dateStart" + stepno + "' name='dateStart" + stepno + "'   value='" + dateStart + "' readonly /></td>";
-            tableHtml += "<td><input class='form-control' type='text' id='dateEnd" + stepno + "' name='dateEnd" + stepno + "'   value='" + dateEnd + "' readonly /></td>";
+            tableHtml += "<td><input class='form-control' type='text' id='stepNo" + stepno + "' name='stepNo'   value='" + stepno + "' readonly /></td>";
+            tableHtml += "<td><input class='form-control' type='text' id='dateStart" + stepno + "' name='dateStart'   value='" + dateStart + "' readonly /></td>";
+            tableHtml += "<td><input class='form-control' type='text' id='dateEnd" + stepno + "' name='dateEnd'   value='" + dateEnd + "' readonly /></td>";
             tableHtml += "<td><input class='editDate' type='button' value='Update'  id='editDate" + stepno + "' name='editDate" + stepno + "' editDate-id='" + stepno + "' class='form-control'></td>"
             tableHtml += "</tr>";
             $("#planBody").append(tableHtml);
             var steplength = steps.length;
             var newStepNo = parseInt(stepno) + 1;
+           
             $.each(steps, function (index, val) {
                 if (val.StepNumber == newStepNo) {
+
+                    window.currentSteps = newStepNo
+
                     $(".step-label").text(val.StepName)
                     $("#stepname").attr("data-stepno", val.StepNumber)
                     $("#stepname").val(val.StepDescription).prop("readonly", true)
@@ -430,8 +448,12 @@
             $("#dateStart").val("");
             $("#dateEnd").val("");
         }
-      
-    })
+
+    });
+
+
+
+
          $.ajax({
              url: "http://adpgintranet2.web.analog.com/webApi/api/getuser/q?ntid=@ntid",
              type: "GET",
@@ -444,7 +466,9 @@
                  $("#leaderEmail").val(empMail);
                  getEmpName(empno);
             }
-        });
+    });
+
+
     function getEmpName(empno) {
 
 
@@ -532,9 +556,9 @@
                     tableHtml = "";
                     tableHtml += "<tr>";
                     tableHtml += "<td> Member </td>";
-                    tableHtml += "<td><input class='form-control' type='text' id='memberName" + counter + "' name='memberName" + counter + "'  value='" + empName + "' readonly /></td>";
-                    tableHtml += "<td><input class='form-control' type='text' id='memberID" + counter + "' name='memberID" + counter + "'   value='" + empId + "' readonly /></td>";
-                    tableHtml += "<td><input class='form-control' type='text' id='memberEmail" + counter + "' name='memberEmail" + counter + "'   value='" + empEmail + "' readonly /></td>";
+                    tableHtml += "<td><input class='form-control' type='text' id='memberName" + counter + "' name='memberName'  value='" + empName + "' readonly /></td>";
+                    tableHtml += "<td><input class='form-control' type='text' id='memberID" + counter + "' name='memberID'   value='" + empId + "' readonly /></td>";
+                    tableHtml += "<td><input class='form-control' type='text' id='memberEmail" + counter + "' name='memberEmail'   value='" + empEmail + "' readonly /></td>";
                     tableHtml += "</tr>";
 
                     if ($("#memberID0").val() == empId || $("#memberID1").val() == empId || $("#memberID2").val() == empId || $("#memberID3").val() == empId || $("#memberID4").val() == empId || $("#memberID5").val() == empId || $("#memberID6").val() == empId) {
@@ -600,7 +624,7 @@
                             data1 = JSON.parse(data1);
 
                             console.log(data1);
-
+                           
                             $("#sponsorEmpName").val(data1[0]["Dept_Mgr"]);
                             $("#sponsorEmpName").prop("readonly", true);
                             $("#sponsorEmpID").val(data1[0]["Dept_Mgr_EmpID"]);
@@ -626,7 +650,7 @@
 
                             data2 = JSON.parse(data2);
                             //console.log(data2);
-
+                            $("#sponsorDropOpt").val("1");
                             $("#selectSponsor").prop("hidden", false);
                             $("#inputSponsor").prop("hidden", true);
 

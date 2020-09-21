@@ -15,26 +15,18 @@ namespace TQMPG.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Project_Charter
+public partial class TQM_Project_Plan
 {
 
     public int AutoID { get; set; }
 
-    public int TQMID { get; set; }
+    public Nullable<int> TQMID { get; set; }
 
-    public string Business_Case { get; set; }
+    public Nullable<int> MethodologyStepID { get; set; }
 
-    public string Opportunity { get; set; }
+    public Nullable<System.DateTime> PlanStart { get; set; }
 
-    public string Risk_Assessment { get; set; }
-
-    public string Goal { get; set; }
-
-    public string Scope { get; set; }
-
-    public Nullable<int> MethodologyID { get; set; }
-
-    public Nullable<int> CurrentStep { get; set; }
+    public Nullable<System.DateTime> PlanEnd { get; set; }
 
 }
 

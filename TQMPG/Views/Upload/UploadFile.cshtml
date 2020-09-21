@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "UploadFile";
+}
+
+<h2>UploadFile</h2>
+
+@using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+<div class="container">
+
+    <div class="row">
+        <label>Project Title :</label> <input class="form-control" type="text" id="" name="" />
+
+    </div>
+
+    <div class="row">
+        <label>FY :</label> <input class="form-control" type="text" id="" name="" value="FY20Q4" readonly />
+
+    </div>
+
+    <div class="row">
+        <label>TQM Category :</label>
+        <select class="form-control" name="riskAssessment" id="riskAssessment" required>
+            <option value="Default" disabled selected>--- Please Select Category ---</option>
+            <option value="Low">Cost</option>
+            <option value="Medium">EHS</option>
+            <option value="High">Innovation</option>
+            <option value="High">People</option>
+            <option value="High">Predictability</option>
+            <option value="High">Quality</option>
+            <option value="High">Responsiveness</option>
+
+
+        </select>
+
+    </div>
+
+    <div class="row">
+        <label>TQM Methodology :</label>
+        <select class="form-control" name="riskAssessment" id="riskAssessment" required>
+            <option value="Default" disabled selected>--- Please Select Methodology ---</option>
+            <option value="Low">Cost</option>
+            <option value="Medium">EHS</option>
+            <option value="High">Innovation</option>
+            <option value="High">People</option>
+            <option value="High">Predictability</option>
+            <option value="High">Quality</option>
+            <option value="High">Responsiveness</option>
+
+
+        </select>
+      
+
+
+    </div>
+
+    <hr />
+
+    <label style="color:red">Please upload power point only</label>
+
+    <br />
+    @Html.TextBox("file", "", new { type = "file" }) <br />
+
+
+    <br />
+
+    <input type="submit" value="Upload" />
+
+    @ViewBag.Message
+
+</div>
+
+
+}  
+
+

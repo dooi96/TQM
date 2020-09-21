@@ -52,6 +52,8 @@ public partial class TQMEntitiesModel : DbContext
 
     public virtual DbSet<TQM_Officials> TQM_Officials { get; set; }
 
+    public virtual DbSet<TQM_Project_Plan> TQM_Project_Plan { get; set; }
+
     public virtual DbSet<TQM_Role> TQM_Role { get; set; }
 
 }
