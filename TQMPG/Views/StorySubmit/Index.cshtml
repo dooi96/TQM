@@ -81,6 +81,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
+                @*<label id="status" name="status" >rr</label>*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TransactDate)
@@ -90,7 +91,7 @@
 
                 @{
 
-                    if (item.Status == "DH PreApproved")
+                    if (item.Status == "3" || item.Status == "DH PreApproved")
                     {
                         <a id=@item.AutoID href="/tqm/ProjectCharter/Create/@item.SerialNo">Project Charter</a>
                         @*@Html.ActionLink("Project Charter", "Edit", new { id = item.AutoID })*@

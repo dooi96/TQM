@@ -263,8 +263,7 @@ namespace TQMPG.Controllers
         {
 
             var empEmail = Request.QueryString["empName"];
-
-
+      
             eLeaveEntities eleave = new eLeaveEntities();
             var query = from x in eleave.v_eLeave_EmployeeDetails
                         where x.empFullName == empEmail
