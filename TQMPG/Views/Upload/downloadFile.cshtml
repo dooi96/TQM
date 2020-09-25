@@ -1,0 +1,90 @@
+﻿@model IEnumerable<TQMPG.Models.TQM_UploadCompletedStory>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Methodology)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.filename)
+        </th>
+        <th>
+           Action
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Methodology)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.filename)
+        </td>
+        <td>
+           <a class="download" href="#" id=@item.filename name=@item.filename >Download</a>
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $(".download").click(function () {
+           
+         
+            var id = $(this).attr("id");
+            //alert(id);
+            $.ajax({
+                url: "/TQM/Upload/getPath",
+                type: "POST",
+                data: {
+                    id: id
+                  
+                },
+                success: function (data) {
+
+
+                    //window.location.replace(data);
+                    console.log(data);
+
+
+                }
+            });
+
+         
+        })
+
+
+
+    });
+
+
+</script>

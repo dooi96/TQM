@@ -111,7 +111,7 @@
           </Key>
           <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmpNo" Type="int" />
-          <Property Name="EmpName" Type="nvarchar" MaxLength="20" />
+          <Property Name="EmpName" Type="nvarchar" MaxLength="50" />
           <Property Name="EmpEmail" Type="nvarchar" MaxLength="50" />
           <Property Name="RoleID" Type="int" />
         </EntityType>
@@ -132,6 +132,25 @@
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="20" />
           <Property Name="RoleDescription" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="TQM_Status_List">
+          <Key>
+            <PropertyRef Name="StatusNo" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusNo" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TQM_UploadCompletedStory">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Methodology" Type="int" Nullable="false" />
+          <Property Name="FY" Type="nvarchar" MaxLength="50" />
+          <Property Name="filename" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_TQM_Member_TQM_Role">
           <End Role="TQM_Role" Type="Self.TQM_Role" Multiplicity="1" />
@@ -158,6 +177,8 @@
           <EntitySet Name="TQM_Officials" EntityType="Self.TQM_Officials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TQM_Project_Plan" EntityType="Self.TQM_Project_Plan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TQM_Role" EntityType="Self.TQM_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_Status_List" EntityType="Self.TQM_Status_List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TQM_UploadCompletedStory" EntityType="Self.TQM_UploadCompletedStory" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_TQM_Member_TQM_Role" Association="Self.FK_TQM_Member_TQM_Role">
             <End Role="TQM_Role" EntitySet="TQM_Role" />
             <End Role="TQM_Member" EntitySet="TQM_Member" />
@@ -180,10 +201,12 @@
           <EntitySet Name="TQM_Officials" EntityType="TQMModel.TQM_Officials" />
           <EntitySet Name="TQM_Project_Plan" EntityType="TQMModel.TQM_Project_Plan" />
           <EntitySet Name="TQM_Role" EntityType="TQMModel.TQM_Role" />
+          <EntitySet Name="TQM_Status_List" EntityType="TQMModel.TQM_Status_List" />
           <AssociationSet Name="FK_TQM_Member_TQM_Role" Association="TQMModel.FK_TQM_Member_TQM_Role">
             <End Role="TQM_Role" EntitySet="TQM_Role" />
             <End Role="TQM_Member" EntitySet="TQM_Member" />
           </AssociationSet>
+          <EntitySet Name="TQM_UploadCompletedStory" EntityType="TQMModel.TQM_UploadCompletedStory" />
         </EntityContainer>
         <EntityType Name="Dept_Info">
           <Key>
@@ -292,7 +315,7 @@
           </Key>
           <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmpNo" Type="Int32" />
-          <Property Name="EmpName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmpEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RoleID" Type="Int32" />
         </EntityType>
@@ -315,6 +338,14 @@
           <Property Name="RoleDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TQM_Member" Relationship="TQMModel.FK_TQM_Member_TQM_Role" FromRole="TQM_Role" ToRole="TQM_Member" />
         </EntityType>
+        <EntityType Name="TQM_Status_List">
+          <Key>
+            <PropertyRef Name="StatusNo" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusNo" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
         <Association Name="FK_TQM_Member_TQM_Role">
           <End Type="TQMModel.TQM_Role" Role="TQM_Role" Multiplicity="1" />
           <End Type="TQMModel.TQM_Member" Role="TQM_Member" Multiplicity="*" />
@@ -327,6 +358,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TQM_UploadCompletedStory">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Methodology" Type="Int32" Nullable="false" />
+          <Property Name="FY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="filename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -470,6 +512,27 @@
                 <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_Status_List">
+            <EntityTypeMapping TypeName="TQMModel.TQM_Status_List">
+              <MappingFragment StoreEntitySet="TQM_Status_List">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StatusNo" ColumnName="StatusNo" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TQM_UploadCompletedStory">
+            <EntityTypeMapping TypeName="TQMModel.TQM_UploadCompletedStory">
+              <MappingFragment StoreEntitySet="TQM_UploadCompletedStory">
+                <ScalarProperty Name="filename" ColumnName="filename" />
+                <ScalarProperty Name="FY" ColumnName="FY" />
+                <ScalarProperty Name="Methodology" ColumnName="Methodology" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ProjectTitle" ColumnName="ProjectTitle" />
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

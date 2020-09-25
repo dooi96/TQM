@@ -206,6 +206,12 @@
     <Compile Include="Models\TQM_Role.cs">
       <DependentUpon>TQM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TQM_Status_List.cs">
+      <DependentUpon>TQM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TQM_UploadCompletedStory.cs">
+      <DependentUpon>TQM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\v_eLeave_EmployeeDetails.cs">
       <DependentUpon>eLeave.tt</DependentUpon>
     </Compile>
@@ -322,6 +328,8 @@
     <Content Include="Views\ProjectCharter\Edit.cshtml" />
     <Content Include="Views\ProjectCharter\Index.cshtml" />
     <Content Include="Views\Upload\UploadFile.cshtml" />
+    <Content Include="Views\Approval\Facilitator.cshtml" />
+    <Content Include="Views\Upload\downloadFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

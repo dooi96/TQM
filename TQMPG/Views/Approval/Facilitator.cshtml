@@ -1,0 +1,131 @@
+﻿@model IEnumerable<TQMPG.Models.TQM_Details>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 style="margin-top:100px;">Facilitator Assignment Page</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SerialNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dept)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Idea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KPI_Dept)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KPI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SynergyModel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransactDate)
+        </th>
+        <th>
+           Action
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SerialNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dept)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KPI_Dept)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KPI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SynergyModel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactDate)
+            </td>
+            <td>
+
+                <a class="assignFac" href="#" id="assignFac-@item.SerialNo" name="assignFac-@item.SerialNo">Assign Facilitator</a>
+             
+            </td>
+        </tr>
+    }
+</table>
+
+
+<div class="modal fade" id="facilitatorAssign" tabindex="-1" role="dialog" aria-labelledby="facilitatorAssign" aria-hidden="true">
+
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Assign Facilitator : <label style="background-color:chartreuse" class="control-label method-label"></label> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label class="control-label step-label">Facilitator</label>
+                @Html.DropDownList("FacilitatorName", null, "---Select One---", new { @class = "form-control", required = "required" })
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="nextstep">Assign</button>
+                <button type="button" id="submitPlan" name="submitPlan" class="btn btn-primary" hidden>Submit </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $(".assignFac").click(function () {
+            row = $(this).attr("id");
+            $("#facilitatorAssign").modal("show");
+            alert(row);
+
+        });
+
+        $("#nextstep").click(function () {
+            $("#facilitatorAssign").modal("hide");
+        });
+
+    });
+</script>

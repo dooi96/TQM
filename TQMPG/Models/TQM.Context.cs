@@ -56,6 +56,10 @@ public partial class TQMEntitiesModel : DbContext
 
     public virtual DbSet<TQM_Role> TQM_Role { get; set; }
 
+    public virtual DbSet<TQM_Status_List> TQM_Status_List { get; set; }
+
+    public virtual DbSet<TQM_UploadCompletedStory> TQM_UploadCompletedStory { get; set; }
+
 }
 
 }

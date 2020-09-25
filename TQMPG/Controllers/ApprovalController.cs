@@ -14,10 +14,16 @@ namespace TQMPG.Controllers
     {
         private TQMEntitiesModel db = new TQMEntitiesModel();
 
+        public ActionResult Facilitator()
+        {
+
+            ViewBag.FacilitatorName = new SelectList(db.TQM_Officials.Where(x => x.RoleID == 3), "EmpNo", "EmpName");
+            return View(db.TQM_Details.Where(x => x.Status == "7").ToList());
+        }
         // GET: Approval
         public ActionResult Index()
         {
-            return View(db.TQM_Details.Where(x => x.Status == "PreDH Approval").ToList());
+            return View(db.TQM_Details.Where(x => x.Status == "2" || x.Status == "4").ToList());
         }
 
         // GET: Approval/Details/5
@@ -93,29 +99,55 @@ namespace TQMPG.Controllers
             //System.Diagnostics.Debug.WriteLine(Request.Form);
             if (ModelState.IsValid)
             {
-                TQM_Approval tqm_Approval = new TQM_Approval();
+                string status = Request.Form["Status"];
 
-                tqm_Approval.ApprovalStatus = "A";
-                tqm_Approval.TQMID = Int32.Parse(Request.Form["tqmID"]);
-                tqm_Approval.EmpNo = Int32.Parse(Request.Form["empNo"]);
-                tqm_Approval.ApprovalComment = Request.Form["approvalComment"];
-                tqm_Approval.ApprovalDatetime = DateTime.Now;
-                tqm_Approval.ApprovalStep = '2';
+                if (status == "2")
+                {
+                    TQM_Approval tqm_Approval = new TQM_Approval();
 
-                TQM_Details tQM_Details = db.TQM_Details.Find(Int32.Parse(Request.Form["tqmID"]));
+                    tqm_Approval.ApprovalStatus = "A";
+                    tqm_Approval.TQMID = Int32.Parse(Request.Form["tqmID"]);
+                    tqm_Approval.EmpNo = Int32.Parse(Request.Form["empNo"]);
+                    tqm_Approval.ApprovalComment = Request.Form["approvalComment"];
+                    tqm_Approval.ApprovalDatetime = DateTime.Now;
+                    tqm_Approval.ApprovalStep = '2';
 
-                tQM_Details.Status = "DH PreApproved";
+                    TQM_Details tQM_Details = db.TQM_Details.Find(Int32.Parse(Request.Form["tqmID"]));
 
-                db.Entry(tQM_Details).State = EntityState.Modified;
+                    tQM_Details.Status = "3";
 
-                db.TQM_Approval.Add(tqm_Approval);
-                db.SaveChanges();
+                    db.Entry(tQM_Details).State = EntityState.Modified;
+
+                    db.TQM_Approval.Add(tqm_Approval);
+                    db.SaveChanges();
 
 
 
 
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TQM_Approval tqm_Approval = new TQM_Approval();
 
-                return RedirectToAction("Index");
+                    tqm_Approval.ApprovalStatus = "A";
+                    tqm_Approval.TQMID = Int32.Parse(Request.Form["tqmID"]);
+                    tqm_Approval.EmpNo = Int32.Parse(Request.Form["empNo"]);
+                    tqm_Approval.ApprovalComment = Request.Form["approvalComment"];
+                    tqm_Approval.ApprovalDatetime = DateTime.Now;
+                    tqm_Approval.ApprovalStep = '2';
+
+                    TQM_Details tQM_Details = db.TQM_Details.Find(Int32.Parse(Request.Form["tqmID"]));
+
+                    tQM_Details.Status = "7";
+
+                    db.Entry(tQM_Details).State = EntityState.Modified;
+
+                    db.TQM_Approval.Add(tqm_Approval);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
             }
 
             return View();

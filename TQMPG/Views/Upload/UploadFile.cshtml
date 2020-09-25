@@ -10,26 +10,26 @@
 <div class="container">
 
     <div class="row">
-        <label>Project Title :</label> <input class="form-control" type="text" id="" name="" />
+        <label>Project Title :</label> <input class="form-control" type="text" id="projectTitle" name="projectTitle" />
 
     </div>
 
     <div class="row">
-        <label>FY :</label> <input class="form-control" type="text" id="" name="" value="FY20Q4" readonly />
+        <label>FY :</label> <input class="form-control" type="text" id="fy" name="fy" value="FY20Q4" readonly />
 
     </div>
 
     <div class="row">
         <label>TQM Category :</label>
-        <select class="form-control" name="riskAssessment" id="riskAssessment" required>
+        <select class="form-control" name="category" id="category" required>
             <option value="Default" disabled selected>--- Please Select Category ---</option>
-            <option value="Low">Cost</option>
-            <option value="Medium">EHS</option>
-            <option value="High">Innovation</option>
-            <option value="High">People</option>
-            <option value="High">Predictability</option>
-            <option value="High">Quality</option>
-            <option value="High">Responsiveness</option>
+            <option value="Cost">Cost</option>
+            <option value="EHS">EHS</option>
+            <option value="Innovation">Innovation</option>
+            <option value="People">People</option>
+            <option value="Predictability">Predictability</option>
+            <option value="Quality">Quality</option>
+            <option value="Responsiveness">Responsiveness</option>
 
 
         </select>
@@ -38,19 +38,9 @@
 
     <div class="row">
         <label>TQM Methodology :</label>
-        <select class="form-control" name="riskAssessment" id="riskAssessment" required>
-            <option value="Default" disabled selected>--- Please Select Methodology ---</option>
-            <option value="Low">Cost</option>
-            <option value="Medium">EHS</option>
-            <option value="High">Innovation</option>
-            <option value="High">People</option>
-            <option value="High">Predictability</option>
-            <option value="High">Quality</option>
-            <option value="High">Responsiveness</option>
+        @Html.DropDownList("MethodologyID", null, "---Select One---", new { @class = "form-control", required = "required" })
+        @*@Html.ValidationMessageFor(model => model.MethodologyID, "", new { @class = "text-danger" })*@
 
-
-        </select>
-      
 
 
     </div>
