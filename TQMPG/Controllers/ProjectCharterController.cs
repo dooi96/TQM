@@ -18,6 +18,12 @@ namespace TQMPG.Controllers
         private eLeaveEntities eleave = new eLeaveEntities();
         private string sponsorName;
 
+
+        public ActionResult Amendment(int? id)
+        {
+            Project_Charter project_Charter = db.Project_Charter.Find(id);
+            return View(project_Charter);
+        }
         // GET: ProjectCharter
         public ActionResult Index()
         {

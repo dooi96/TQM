@@ -330,6 +330,7 @@
     <Content Include="Views\Upload\UploadFile.cshtml" />
     <Content Include="Views\Approval\Facilitator.cshtml" />
     <Content Include="Views\Upload\downloadFile.cshtml" />
+    <Content Include="Views\ProjectCharter\Amendment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
